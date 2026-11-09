@@ -1,0 +1,11 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Crussen · Autorización</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 20px;color:#1b2027}h1{font-size:28px}code{background:#eef;padding:2px 6px;border-radius:4px}a{color:#1a73e8}</style></head><body>
+<h1>Autorización recibida</h1><p id="msg">Procesando…</p><p id="fallback" style="display:none">Si la ventana no se cierra sola, vuelve a la app y continúa: el código ya se envió a tu PC.</p>
+<script>
+const p=new URLSearchParams(location.search), code=p.get('code'), err=p.get('error'), state=p.get('state')||'';
+const m=document.getElementById('msg');
+if(err){m.textContent='La autorización fue cancelada o falló: '+err;}
+else if(code){m.textContent='Enviando el código a la herramienta local de tu PC…';
+ document.getElementById('fallback').style.display='block';
+ location.replace('http://127.0.0.1:8765/callback?code='+encodeURIComponent(code)+'&state='+encodeURIComponent(state)+'&scopes='+encodeURIComponent(p.get('scopes')||''));}
+else{m.textContent='No llegó ningún código.';}
+</script></body></html>
